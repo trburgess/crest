@@ -7,28 +7,28 @@
 
 var fs = require("fs"),
   mongodb = require("mongodb"),
-  restify = module.exports.restify = require("restify");
+  restify = (module.exports.restify = require("restify"));
 
 var DEBUGPREFIX = "DEBUG: ";
 
 var config = {
-  "db": {
-    "port": 27017,
-    "host": "localhost"
+  db: {
+    port: 27017,
+    host: "localhost"
   },
-  "server": {
-    "port": 3500,
-    "address": "0.0.0.0"
+  server: {
+    port: 3500,
+    address: "0.0.0.0"
   },
-  "flavor": "mongodb",
-  "debug": false
+  flavor: "mongodb",
+  debug: false
 };
 
-var debug = module.exports.debug = function (str) {
+var debug = (module.exports.debug = function(str) {
   if (config.debug) {
     console.log(DEBUGPREFIX + str);
   }
-};
+});
 
 try {
   config = JSON.parse(fs.readFileSync(process.cwd() + "/config.json"));
@@ -41,16 +41,16 @@ module.exports.config = config;
 var server = restify.createServer({
   name: "crest"
 });
-server.acceptable = ['application/json'];
-server.use(restify.acceptParser(server.acceptable));
-server.use(restify.bodyParser());
-server.use(restify.fullResponse());
-server.use(restify.queryParser());
-server.use(restify.jsonp());
+server.acceptable = ["application/json"];
+server.use(restify.plugins.acceptParser(server.acceptable));
+server.use(restify.plugins.bodyParser());
+server.use(restify.plugins.fullResponse());
+server.use(restify.plugins.queryParser());
+server.use(restify.plugins.jsonp());
 module.exports.server = server;
 
-require('./lib/rest');
+require("./lib/rest");
 
-server.listen(config.server.port, function () {
+server.listen(config.server.port, function() {
   console.log("%s listening at %s", server.name, server.url);
 });

@@ -38,7 +38,6 @@ try {
 } catch (e) {
   debug("No config.json file found. Fall back to default config.");
 }
-console.log(config);
 
 module.exports.config = config;
 

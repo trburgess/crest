@@ -1,10 +1,6 @@
 {
-  "db": {
-    "port": 27017,
-    "host": "localhost"
-  },
   "server": {
-    "port": 3500,
+    "port": 3002,
     "address": "0.0.0.0"
   },
   "flavor": "normal",

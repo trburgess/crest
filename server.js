@@ -31,10 +31,14 @@ var debug = (module.exports.debug = function(str) {
 });
 
 try {
-  config = JSON.parse(fs.readFileSync(process.cwd() + "/config.json"));
+  var configOverride = JSON.parse(
+    fs.readFileSync(process.cwd() + "/config.json")
+  );
+  config = Object.assign(config, configOverride);
 } catch (e) {
   debug("No config.json file found. Fall back to default config.");
 }
+console.log(config);
 
 module.exports.config = config;
 
